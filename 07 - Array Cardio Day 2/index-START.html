@@ -40,11 +40,36 @@
     // Array.prototype.find()
     // Find is like filter, but instead returns just the one you are looking for
     // find the comment with the ID of 823423
+    console.table(comments.find((comment) => comment.id === 823423));
 
     // Array.prototype.findIndex()
     // Find the comment with this ID
     // delete the comment with the ID of 823423
 
+    // Find it
+    const indexOfCommentToDelete = comments.findIndex((comment) => {
+      return comment.id === 823423;
+    });
+    
+    // Deletion method 1 via splice()1
+    console.info('begin method 1');
+    {
+      const commentsViaSpliceMethod = [...comments];
+
+      commentsViaSpliceMethod.splice(indexOfCommentToDelete, 1);
+
+      console.table(commentsViaSpliceMethod);
+    }
+    
+    // Deletion method 2 via redux
+    console.info('begin method 2');
+    {
+      const commentsViaSomeReduxConvention = [
+        ...comments.slice(0, indexOfCommentToDelete),
+        ...comments.slice(indexOfCommentToDelete + 1)
+      ]
+      console.table(commentsViaSomeReduxConvention);
+    }
   </script>
 </body>
 </html>
