@@ -38,28 +38,72 @@
     
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    const fifteen = inventors.filter((arrayElement) => {
+      return arrayElement.year >= 1500 && arrayElement.year < 1600;
+    });
+    console.table(fifteen);
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
+    const inventorFirstLastNames = inventors.map((inventor) => {
+      return {
+        'first': inventor.first,
+        'last': inventor.last,
+      };
+    });
+    console.table(inventorFirstLastNames);
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    inventors.sort((a, b) => (b.passed - b.year) - (a.passed - a.year));
+    updatedInventors = inventors.map((inventor) => {
+      return {...inventor, 'age': inventor.passed - inventor.year};
+    });
+    console.table(updatedInventors);
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
+    let totalYearsLivedAltogether = inventors.reduce((accumulator, inventor) => {
+      return inventor.passed - inventor.year + accumulator;
+    }, 0);
+    let totalYearsLivedAltogetherConfirmation = updatedInventors.reduce((accumulator, updatedInventor) => {
+      return updatedInventor.age + accumulator;
+    }, 0);
+    console.log(`${totalYearsLivedAltogether} | ${totalYearsLivedAltogetherConfirmation}`);
 
     // 5. Sort the inventors by years lived
+    inventors.sort((a, b) => ([a.passed - a.year] - [b.passed - b.year]));
+
+    console.table(inventors);
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
-
+    const everyLink = document.querySelectorAll('.mw-category > div > ul > li > a');
+    // const everyLinkTextContent = [...everyLink].map((link) => link.textContent); // either this 
+    const everyLinkTextContent = Array.from(everyLink).map((link) => link.textContent); // or this
+    const containsDe = everyLinkTextContent.filter((textContent) => textContent.includes('de'));
+    console.table(containsDe);
+    console.table(inventors.sort((a, b) => a.first - b.first))
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    people.sort((a, b) => {
+      return a < b ? -1 : 1;
+    });
+    console.table(people);
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    const modesOfTransportation = data.reduce((accumObj, element) => {
+      if (!accumObj[element]) {
+        accumObj[element] = 0;
+      }
+      accumObj[element]++;
+      return accumObj;
+    }, {});
+
+    console.table(modesOfTransportation);
 
   </script>
 </body>
